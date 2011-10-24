@@ -14,18 +14,18 @@ module Autosiege
       :short => "-c CONFIG",
       :long  => "--config CONFIG",
       :default => 'config/siege/siegerc',
-      :description => "The siege configuration file to use (default: ./config/siege/siegerc)"
+      :description => "The siege configuration file to use, default is 'config/siege/siegerc'"
 
     option :urls_file,
       :short => "-u URLSFILE",
       :long  => "--urls URLSFILE",
       :default => 'config/siege/urls.txt',
-      :description => "The urls file to use (default: ./config/siege/urls.txt)"
+      :description => "The urls file to use, default is 'config/siege/urls.txt'"
 
     option :log_file,
       :short => "-l LOGFILE",
       :long  => "--log LOGFILE",
-      :description => "The log file location (default: ./log/siege.log)",
+      :description => "The log file location, default is 'log/siege.log'",
       :default => 'log/siege.log'
 
     option :help,
@@ -36,6 +36,12 @@ module Autosiege
       :boolean => true,
       :show_options => true,
       :exit => 0
+
+    option :concurrency,
+      :short => "-c CONCURRENCY",
+      :long => "--concurrency CONCURRENCY",
+      :default => 25,
+      :description => "Number of concurrent users, default is 25"
 
     def self.run
       cli = new
@@ -55,14 +61,17 @@ module Autosiege
         exit 0
       else
         ENV['SIEGE_LOGFILE'] = config[:logfile]
-        system "siege --concurrent=25 --internet --time 1m --reps=1 --rc=#{config[:urls_file]} --log --file=#{config[:config_file]}"
+        cmd = "siege --concurrent=#{config[:concurrency]} --internet --time 1m --rc=#{config[:urls_file]} --log --file=#{config[:config_file]}"
+        puts cmd
+        system cmd
       end
     end
 
     def setup
-      system "mkdir -p config/siege"
       system "mkdir -p log"
+      system "touch log/siege.log"
 
+      system "mkdir -p config/siege"
       siegefile = File.expand_path("../../../conf/siegerc", __FILE__)
       system "cp #{siegefile} config/siege/siegerc"
 
