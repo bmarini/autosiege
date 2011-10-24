@@ -1,5 +1,5 @@
 require "autosiege/version"
 
 module Autosiege
-  # Your code goes here...
+  autoload :CLI, 'autosiege/cli'
 end

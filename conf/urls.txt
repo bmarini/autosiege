@@ -1,0 +1,3 @@
+# Put urls in this file, for example:
+# http://example.com
+# http://example.com POST key1=val&key2=val
