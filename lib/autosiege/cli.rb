@@ -61,7 +61,7 @@ module Autosiege
         exit 0
       else
         ENV['SIEGE_LOGFILE'] = config[:logfile]
-        cmd = "siege --concurrent=#{config[:concurrency]} --internet --time 1m --rc=#{config[:urls_file]} --log --file=#{config[:config_file]}"
+        cmd = "siege --concurrent=#{config[:concurrency]} --internet --time 1m --rc=#{config[:config_file]} --log --file=#{config[:urls_file]}"
         puts cmd
         system cmd
       end
