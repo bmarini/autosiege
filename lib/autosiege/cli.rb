@@ -63,11 +63,11 @@ module Autosiege
       system "mkdir -p config/siege"
       system "mkdir -p log"
 
-      siegefile = File.expand_path("../../conf/siegerc", __FILE__)
-      system "cp #{siegefile} conf/siege/siegerc"
+      siegefile = File.expand_path("../../../conf/siegerc", __FILE__)
+      system "cp #{siegefile} config/siege/siegerc"
 
-      urlsfile = File.expand_path("../../conf/urls.txt", __FILE__)
-      system "cp #{urlsfile} conf/siege/urls.txt"
+      urlsfile = File.expand_path("../../../conf/urls.txt", __FILE__)
+      system "cp #{urlsfile} config/siege/urls.txt"
     end
   end
 end
